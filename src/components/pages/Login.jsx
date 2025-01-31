@@ -34,7 +34,7 @@ const Login = () => {
           value={loginForm.password}
         />
       </div>
-      <button onClick={() => login(loginForm)} disabled={loading}>
+      <button onClick={(e) => login(loginForm, e)} disabled={loading}>
         {loading ? "Submitting..." : "Submit"}
       </button>
       {error && <p className="error">Error: {error.message}</p>}

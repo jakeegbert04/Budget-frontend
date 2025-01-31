@@ -7,19 +7,21 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const [userInfo, setUserInfo] = useState({});
 
-  const { data, error, loading, fetchData } = useFetch();
-  const { navigate } = useNavigate();
+  const { loading, fetchData } = useFetch();
+  const navigate = useNavigate();
 
   function handleSetUser(data) {
-    setUser(data);
+    setUserInfo(data);
   }
 
-  const login = async (loginForm) => {
+  const login = async (loginForm, event) => {
+    event.preventDefault();
     fetchData("user/auth", {
       method: "POST",
       body: loginForm,
     }).then((data) => {
       setUserInfo(data);
+      navigate("/home");
     });
   };
 
