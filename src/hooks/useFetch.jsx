@@ -20,6 +20,7 @@ const useFetch = () => {
         headers: options.headers || { "Content-Type": "application/json" },
         body: options.body ? JSON.stringify(options.body) : null,
         signal: abortController.signal,
+        credentials: options.credentials || "include",
       })
         .then((response) => {
           if (!response.ok) {

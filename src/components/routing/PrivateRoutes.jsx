@@ -7,13 +7,13 @@ const Categories = lazy(() => import("../pages/Categories"));
 
 const PrivateRoutes = () => {
   return (
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   );
 };
 
