@@ -1,5 +1,5 @@
-import { useState, createContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, createContext, useEffect, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
 export const AuthContext = createContext();
@@ -7,77 +7,106 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const navigate = useNavigate();
   const { loading, fetchData } = useFetch();
+  const location = useLocation();
 
-  const sessionUserInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-  const sessionIsAuthenticated =
-    sessionStorage.getItem("isAuthenticated") === "true";
+  // Initialize state from sessionStorage with proper type checking
+  const [userInfo, setUserInfo] = useState(() => {
+    try {
+      const storedUserInfo = sessionStorage.getItem("userInfo");
+      return storedUserInfo ? JSON.parse(storedUserInfo) : null;
+    } catch (error) {
+      console.error("Failed to parse userInfo from sessionStorage:", error);
+      return null;
+    }
+  });
 
-  const [userInfo, setUserInfo] = useState(sessionUserInfo || null);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    sessionIsAuthenticated || false
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem("isAuthenticated") === "true";
+  });
 
-  function handleSetUser(data) {
-    setUserInfo(data);
-    sessionStorage.setItem("userInfo", JSON.stringify(data));
-  }
+  // Check authentication status on mount and route changes
+  const checkSession = useCallback(async () => {
+    // Don't check session on login page to avoid redirect loops
+    if (location.pathname === "/login") {
+      return;
+    }
 
-  const login = async (loginForm, event) => {
-    event.preventDefault();
-    fetchData("user/auth", {
-      method: "POST",
-      body: loginForm,
-    }).then((data) => {
-      const user = data.results.user_info;
-      setUserInfo(user);
-      setIsAuthenticated(true);
-      console.log("navigating to home");
-      navigate("/home");
-    });
+    try {
+      const data = await fetchData("validate-session", {
+        method: "GET",
+      });
+
+      if (data && data.message === "Session Valid" && data.results) {
+        setIsAuthenticated(true);
+        // Make sure we're accessing the user_info property correctly
+        if (data.user_info) {
+          setUserInfo(data.user_info);
+        }
+      } else {
+        // Clear auth state
+        handleLogout();
+      }
+    } catch (error) {
+      console.error("Session validation failed:", error);
+      // Clear auth state on error
+      handleLogout();
+    }
+  }, [fetchData, location.pathname, navigate]);
+
+  const handleSetUser = (data) => {
+    if (data) {
+      setUserInfo(data);
+      sessionStorage.setItem("userInfo", JSON.stringify(data));
+    }
   };
 
-  useEffect(() => {
-    const checkSession = () => {
-      fetchData("validate-session", {
-        method: "GET",
-      })
-        .then((data) => {
-          console.log("data", data);
-          if (data.message == "Session Valid" && data.results) {
-            console.log("hey there");
-            setIsAuthenticated(true);
-            setUserInfo(data.user_info);
-          } else {
-            setIsAuthenticated(false);
-            sessionStorage.removeItem("userInfo");
-            navigate("/login");
-          }
-        })
-        .catch(() => {
-          setIsAuthenticated(false);
-          sessionStorage.setItem("isAuthenticated", "false");
-          sessionStorage.removeItem("userInfo");
-          navigate("/login");
-        });
-    };
-
-    checkSession();
-  }, [navigate, fetchData]);
-
-  useEffect(() => {
-    if (userInfo) {
-      sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+  const login = async (loginForm, event) => {
+    if (event) {
+      event.preventDefault();
     }
-  }, [userInfo]);
 
+    try {
+      const data = await fetchData("user/auth", {
+        method: "POST",
+        body: loginForm,
+      });
+
+      if (data && data.results && data.results.user_info) {
+        const user = data.results.user_info;
+        setUserInfo(user);
+        setIsAuthenticated(true);
+        sessionStorage.setItem("isAuthenticated", "true");
+        sessionStorage.setItem("userInfo", JSON.stringify(user));
+        navigate("/home");
+      } else {
+        console.error("Login failed: Invalid response format");
+        // You might want to show an error message to the user here
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      // Handle login error (e.g., show error message)
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserInfo(null);
+    sessionStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("userInfo");
+    navigate("/login");
+  };
+
+  // Check session on initial load and when location changes
   useEffect(() => {
-    sessionStorage.setItem("isAuthenticated", isAuthenticated);
-  }, [isAuthenticated]);
+    checkSession();
+  }, [checkSession]);
 
+  // Export auth state and methods
   const userState = {
     userInfo,
     setUserInfo: handleSetUser,
     login,
+    logout: handleLogout,
     loading,
     isAuthenticated,
   };

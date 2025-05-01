@@ -1,13 +1,20 @@
-import { useContext, useEffect } from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function PrivateRoutes() {
-  const { isAuthenticated } = useContext(AuthContext);
+const PrivateRoute = () => {
+  const { isAuthenticated, loading } = useContext(AuthContext);
+  const location = useLocation();
 
-  useEffect(() => {
-    console.log(isAuthenticated);
-  }, [isAuthenticated]);
+  if (loading) {
+    return <div className="loading">Verifying authentication...</div>;
+  }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
-}
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
+
+  return <Outlet />;
+};
+
+export default PrivateRoute;

@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [loginForm, setLoginForm] = useState({
@@ -12,6 +13,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <h1>Login</h1>
+      <Link to="/landing">Landing page</Link>
       <div className="input-label-wrapper">
         <label htmlFor="email">Email: </label>
         <input
