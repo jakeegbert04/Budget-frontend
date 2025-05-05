@@ -12,5 +12,4 @@ export const publicRoutes = [
     path: "/landing",
     element: Landing,
   },
-  // Add more public routes as needed
 ];
