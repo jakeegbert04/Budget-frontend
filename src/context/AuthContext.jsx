@@ -81,6 +81,9 @@ export default function AuthProvider({ children }) {
   };
 
   const handleLogout = () => {
+    fetchData("logout", {
+      method: "PUT",
+    });
     setIsAuthenticated(false);
     setUserInfo(null);
     sessionStorage.removeItem("isAuthenticated");

@@ -11,9 +11,6 @@ const useFetch = () => {
     setLoading(true);
     setError(null);
 
-    console.log(url);
-
-    // Return a promise to allow chaining .then, .catch, and .finally
     return new Promise((resolve, reject) => {
       fetch(`http://localhost:8089/${url}`, {
         method: options.method || "GET",
@@ -30,12 +27,12 @@ const useFetch = () => {
         })
         .then((json) => {
           setData(json);
-          resolve(json); // Resolve the promise with the data
+          resolve(json);
         })
         .catch((error) => {
           if (error.name !== "AbortError") {
             setError(error);
-            reject(error); // Reject the promise with the error
+            reject(error);
           }
         })
         .finally(() => {
