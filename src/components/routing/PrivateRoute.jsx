@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import PrivateHeader from "../navigation/PrivateHeader";
 
 const PrivateRoute = () => {
   const { isAuthenticated, loading } = useContext(AuthContext);
@@ -14,7 +15,12 @@ const PrivateRoute = () => {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <PrivateHeader />
+      <Outlet />
+    </>
+  );
 };
 
 export default PrivateRoute;

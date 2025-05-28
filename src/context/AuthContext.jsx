@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
+import { publicRoutes } from "../components/routing/publicRoutes";
 
 export const AuthContext = createContext();
 
@@ -24,7 +25,8 @@ export default function AuthProvider({ children }) {
   });
 
   const checkSession = useCallback(async () => {
-    if (location.pathname === "/login") {
+    const publicPaths = publicRoutes.map((route) => route.path);
+    if (publicPaths.includes(location.pathname)) {
       return;
     }
 
