@@ -8,10 +8,12 @@ const PrivateHeader = () => {
 
   return (
     <div className="navbar-container">
-      <NavLink to="/home">Home</NavLink>
-      <NavLink to="/categories">Categories</NavLink>
-      <NavLink to="/accounts">Accounts</NavLink>
-      <NavLink to="/transactions">Transactions</NavLink>
+      <div>
+        <NavLink to="/categories">Categories</NavLink>
+        <NavLink to="/accounts">Accounts</NavLink>
+        <NavLink to="/transactions">Transactions</NavLink>
+      </div>
+      <NavLink to="/home">Logo</NavLink>
       <button onClick={logout}>Logout</button>
     </div>
   );

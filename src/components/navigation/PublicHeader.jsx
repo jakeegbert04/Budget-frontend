@@ -1,9 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 
 const PublicHeader = () => {
+  const { pathname } = useLocation();
   return (
     <div className="navbar-container">
-      <NavLink to="/landing">Landing Page</NavLink>
+      <div className="public-container">
+        {pathname === "/login" ? (
+          <NavLink to="/landing">Landing Page</NavLink>
+        ) : (
+          <NavLink to="/login">Login</NavLink>
+        )}
+        <a href="">Logo</a>
+      </div>
     </div>
   );
 };

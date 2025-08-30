@@ -1,4 +1,7 @@
 @use "./common.scss";
 
+@use "./navigation/private-header.scss";
+@use "./navigation/public-header.scss";
+
 @use "./modals/modal.scss";
 @use "./pages/login.scss";
