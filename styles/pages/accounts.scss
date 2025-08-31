@@ -1,0 +1,24 @@
+.accounts-container {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  h1 {
+    align-self: flex-start;
+    text-align: left;
+  }
+  .accounts-table {
+    width: 80%;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+
+    .table-header {
+      display: flex;
+    }
+
+    .table-titles {
+      display: flex;
+    }
+  }
+}
