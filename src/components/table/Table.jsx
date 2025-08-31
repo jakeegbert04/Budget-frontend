@@ -3,7 +3,7 @@ import TableRow from "./TableRow";
 
 const Table = ({ data, columns }) => {
   return (
-    <table>
+    <table className="table-wrapper">
       <TableHeader columns={columns} />
       <tbody>
         {data?.map((row, idx) => (

@@ -33,12 +33,8 @@ const Accounts = () => {
     fetchAccounts();
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
-    <div className="accounts-container">
+    <div className="page-container accounts-container">
       <div className="title-wrapper">
         <h1>Accounts</h1>
         <button>Add Account</button>

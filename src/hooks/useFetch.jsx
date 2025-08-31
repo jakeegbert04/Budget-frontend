@@ -21,6 +21,10 @@ const useFetch = () => {
       })
         .then((response) => {
           if (!response.ok) {
+            if (response.status === 404) {
+              resolve(null);
+              return null;
+            }
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           return response.json();

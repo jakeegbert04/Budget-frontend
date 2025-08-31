@@ -28,7 +28,7 @@ const Categories = () => {
   }, []);
 
   return (
-    <div className="categories-container">
+    <div className="page-container categories-container">
       <div className="title-wrapper">
         <h1>Categories</h1>
       </div>
