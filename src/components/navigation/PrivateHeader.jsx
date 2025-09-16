@@ -14,7 +14,9 @@ const PrivateHeader = () => {
         <NavLink to="/transactions">Transactions</NavLink>
       </div>
       <NavLink to="/home">Logo</NavLink>
-      <button onClick={logout}>Logout</button>
+      <button className="blue-btn" onClick={logout}>
+        Logout
+      </button>
     </div>
   );
 };

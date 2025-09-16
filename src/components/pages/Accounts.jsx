@@ -37,7 +37,7 @@ const Accounts = () => {
     <div className="page-container accounts-container">
       <div className="title-wrapper">
         <h1>Accounts</h1>
-        <button>Add Account</button>
+        <button className="blue-btn">Add Account</button>
       </div>
       <Table data={data?.results} columns={columns} />
     </div>

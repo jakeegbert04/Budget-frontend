@@ -19,29 +19,13 @@
 
     .input-label-wrapper {
       width: 70%;
+
       input {
         background-color: #eeeeee;
         outline: none;
         border: none;
         padding: 10px 10px;
         width: 90%;
-      }
-    }
-
-    button {
-      width: 130px;
-      border-radius: 25px;
-      padding: 8px 15px;
-      font-size: 16px;
-      background-color: #008ecf;
-      border: none;
-      color: white;
-      transition: 0.2s ease-in;
-
-      &:hover {
-        cursor: pointer;
-        transform: scale(0.9);
-        transition: 0.2s ease-out;
       }
     }
 

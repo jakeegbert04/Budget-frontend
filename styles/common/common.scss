@@ -1,0 +1,40 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.blue-btn {
+  width: fit-content;
+  min-width: 130px;
+  border-radius: 25px;
+  padding: 8px 15px;
+  font-size: 16px;
+  background-color: #008ecf;
+  border: none;
+  color: white;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.9);
+    transition: 0.2s ease-out;
+  }
+}

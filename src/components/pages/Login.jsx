@@ -11,7 +11,7 @@ const Login = () => {
   const { login, loading, error } = useContext(AuthContext);
 
   return (
-    <div className="login-container">
+    <div className="login-container page-container">
       <div className="login-signup-wrapper">
         <div className={`left-side ${toggleSides ? "blue-background" : ""}`}>
           {!toggleSides ? (
@@ -42,7 +42,11 @@ const Login = () => {
                 {error && <p className="error">Error: {error.message}</p>}
               </div>
               <a href="">Forgot your Password?</a>
-              <button onClick={(e) => login(loginForm, e)} disabled={loading}>
+              <button
+                className="blue-btn"
+                onClick={(e) => login(loginForm, e)}
+                disabled={loading}
+              >
                 {loading ? "Submitting..." : "Sign In"}
               </button>
               {error && <p className="error">Error: {error.message}</p>}
@@ -53,7 +57,12 @@ const Login = () => {
               <p>
                 To keep connected with us please login with your personal info
               </p>
-              <button onClick={() => setToggleSides(false)}>Sign In</button>
+              <button
+                className="blue-btn"
+                onClick={() => setToggleSides(false)}
+              >
+                Sign In
+              </button>
             </div>
           )}
         </div>
@@ -62,7 +71,9 @@ const Login = () => {
             <div className="message-wrapper">
               <h2>Don't have an account</h2>
               <p>Enter your personal details and start budgeting today</p>
-              <button onClick={() => setToggleSides(true)}>Sign Up</button>
+              <button className="blue-btn" onClick={() => setToggleSides(true)}>
+                Sign Up
+              </button>
             </div>
           ) : (
             <div className="sign-up-wrapper">
@@ -89,7 +100,7 @@ const Login = () => {
                   {error && <p className="error">Error: {error.message}</p>}
                 </div>
               </div>
-              <button>Sign Up</button>
+              <button className="blue-btn">Sign Up</button>
             </div>
           )}
         </div>
