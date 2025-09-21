@@ -29,11 +29,13 @@ const Categories = () => {
 
   return (
     <div className="page-container categories-container">
-      <div className="title-wrapper">
-        <h1>Categories</h1>
-        <button className="blue-btn">Add Category</button>
+      <div className="table-container">
+        <div className="title-wrapper">
+          <h1>Categories</h1>
+          <button className="blue-btn">Add Category</button>
+        </div>
+        <Table data={data?.results} columns={columns} />
       </div>
-      <Table data={data?.results} columns={columns} />
     </div>
   );
 };

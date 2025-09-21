@@ -1,0 +1,11 @@
+.account-modal-container {
+  width: 100%;
+
+  .inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 65%;
+    margin-bottom: 30px;
+  }
+}

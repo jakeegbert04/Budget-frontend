@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 
+import AccountsModal from "../modals/AccountsModal";
 import Table from "../table/table";
 import useFetch from "../../hooks/useFetch";
 
 const Accounts = () => {
-  const [accounts, setAccounts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { loading, data, setData, fetchData } = useFetch();
+
+  const handleModalChange = (value = true) => {
+    setIsModalOpen(value);
+  };
 
   const columns = [
     {
@@ -35,11 +40,19 @@ const Accounts = () => {
 
   return (
     <div className="page-container accounts-container">
-      <div className="title-wrapper">
-        <h1>Accounts</h1>
-        <button className="blue-btn">Add Account</button>
+      <div className="table-container">
+        <div className="title-wrapper">
+          <h1>Accounts</h1>
+          <button className="blue-btn" onClick={() => handleModalChange()}>
+            Add Account
+          </button>
+        </div>
+        <Table data={data?.results} columns={columns} />
       </div>
-      <Table data={data?.results} columns={columns} />
+      <AccountsModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={handleModalChange}
+      />
     </div>
   );
 };
