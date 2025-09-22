@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { AuthContext } from "../../context/AuthContext";
@@ -15,6 +15,9 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
 
   const { userInfo } = useContext(AuthContext);
   const { loading, fetchData } = useFetch();
+
+  const isFormValid =
+    accountData.name && accountData.account_type && accountData.balance !== "";
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,6 +36,12 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
     });
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setAccountData({ name: "", account_type: "", balance: 0 });
+    }
+  }, [isModalOpen]);
 
   return (
     <Modal
@@ -58,6 +67,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
             placeholder="Name"
             value={accountData.name}
             onChange={handleChange}
+            autoFocus
             required
           />
 
@@ -85,7 +95,11 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
           />
         </div>
 
-        <button className="blue-btn" type="submit" disabled={loading}>
+        <button
+          className="blue-btn"
+          type="submit"
+          disabled={loading || !isFormValid}
+        >
           {loading ? "Adding..." : "Add Account"}
         </button>
       </form>

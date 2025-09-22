@@ -7,9 +7,9 @@ const PrivateRoute = () => {
   const { isAuthenticated, loading } = useContext(AuthContext);
   const location = useLocation();
 
-  if (loading) {
-    return <div className="loading">Verifying authentication...</div>;
-  }
+  // if (loading) {
+  //   return <div className="loading">Verifying authentication...</div>;
+  // }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
