@@ -1,12 +1,55 @@
 import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch";
+
+import TransactionsModal from "../modals/TransactionsModal";
+import Table from "../table/table";
+import usePageFetch from "../../hooks/usePageFetch";
+
+const columns = [
+  {
+    key: "description",
+    label: "Description",
+  },
+  {
+    key: "date",
+    label: "Date",
+  },
+  {
+    key: "account.name",
+    label: "Acount Name",
+  },
+  {
+    key: "category.name",
+    label: "Category Name",
+  },
+  {
+    key: "amount",
+    label: "Amount",
+  },
+];
 
 const Transactions = () => {
-  const { loading, data, fetchData } = useFetch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { loading, data } = usePageFetch("transactions");
+
+  const handleModalChange = (value = true) => {
+    setIsModalOpen(value);
+  };
 
   return (
-    <div>
-      <h1>Transactions</h1>
+    <div className="page-container transactions-container">
+      <div className="table-container">
+        <div className="title-wrapper">
+          <h1>Transactions</h1>
+          <button className="blue-btn" onClick={handleModalChange}>
+            Add{" "}
+          </button>
+        </div>
+        <Table data={data?.results} columns={columns} />
+      </div>
+      <TransactionsModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={handleModalChange}
+      />
     </div>
   );
 };

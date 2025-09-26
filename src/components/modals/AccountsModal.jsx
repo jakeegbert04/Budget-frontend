@@ -1,45 +1,24 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { AuthContext } from "../../context/AuthContext";
-import useFetch from "../../hooks/useFetch";
+import useModalForm from "../../hooks/useModalForm";
 
 import Modal from "./Modal";
 
+const initialState = { name: "", account_type: "", balance: 0 };
+
 const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
-  const [accountData, setAccountData] = useState({
-    name: "",
-    account_type: "",
-    balance: 0,
-  });
-
-  const { userInfo } = useContext(AuthContext);
-  const { loading, fetchData } = useFetch();
-
-  const isFormValid =
-    accountData.name && accountData.account_type && accountData.balance !== "";
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setAccountData((prevState) => ({
-      ...prevState,
-      [name]: name === "balance" ? Number(value) : value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    console.log(accountData);
-    e.preventDefault();
-    await fetchData("account/add", {
-      method: "POST",
-      body: { ...accountData, user_id: userInfo.user_id },
+  const { formData, setFormData, handleChange, handleSubmit, loading, error } =
+    useModalForm({
+      initialState,
+      endpoint: "account/add",
+      onSuccess: () => setIsModalOpen(false),
+      validate: (data) => data.name && data.account_type && data.balance !== "",
     });
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     if (!isModalOpen) {
-      setAccountData({ name: "", account_type: "", balance: 0 });
+      setFormData(initialState);
     }
   }, [isModalOpen]);
 
@@ -65,7 +44,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
             type="text"
             name="name"
             placeholder="Name"
-            value={accountData.name}
+            value={formData.name}
             onChange={handleChange}
             autoFocus
             required
@@ -73,7 +52,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
 
           <select
             name="account_type"
-            value={accountData.account_type}
+            value={formData.account_type}
             onChange={handleChange}
             required
             id=""
@@ -89,7 +68,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
             type="number"
             name="balance"
             placeholder="Current Balance"
-            value={accountData.balance}
+            value={formData.balance}
             onChange={handleChange}
             required
           />
@@ -98,7 +77,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
         <button
           className="blue-btn"
           type="submit"
-          disabled={loading || !isFormValid}
+          disabled={loading || !formData.name || !formData.account_type}
         >
           {loading ? "Adding..." : "Add Account"}
         </button>

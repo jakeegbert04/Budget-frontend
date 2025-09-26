@@ -1,42 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import AccountsModal from "../modals/AccountsModal";
 import Table from "../table/table";
-import useFetch from "../../hooks/useFetch";
+import usePageFetch from "../../hooks/usePageFetch";
+
+const columns = [
+  {
+    key: "name",
+    label: "Name",
+  },
+  {
+    key: "account_type",
+    label: "Type",
+  },
+  {
+    key: "balance",
+    label: "Balance",
+  },
+];
 
 const Accounts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { loading, data, setData, fetchData } = useFetch();
+  const { loading, data } = usePageFetch("accounts");
 
   const handleModalChange = (value = true) => {
     setIsModalOpen(value);
   };
-
-  const columns = [
-    {
-      key: "name",
-      label: "Name",
-    },
-    {
-      key: "account_type",
-      label: "Type",
-    },
-    {
-      key: "balance",
-      label: "Balance",
-    },
-  ];
-
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        await fetchData("accounts");
-      } catch (error) {
-        console.error("Error fetching accounts data:", error);
-      }
-    };
-    fetchAccounts();
-  }, []);
 
   return (
     <div className="page-container accounts-container">
