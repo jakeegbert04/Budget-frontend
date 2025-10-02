@@ -5,9 +5,25 @@ const TableRow = ({ data, columns }) => {
 
   return (
     <tr>
-      {columns.map((column) => (
-        <td key={column.key}>{getValue(data, column.key)}</td>
-      ))}
+      {columns.map((column) => {
+        const value = getValue(data, column.key);
+        let cellClass = "";
+
+        if (column.key === "amount") {
+          if (typeof value === "number") {
+            cellClass = value < 0 ? "amount-negative" : "amount-positive";
+          } else if (!isNaN(Number(value))) {
+            cellClass =
+              Number(value) < 0 ? "amount-negative" : "amount-positive";
+          }
+        }
+
+        return (
+          <td key={column.key} className={cellClass}>
+            {value}
+          </td>
+        );
+      })}
     </tr>
   );
 };

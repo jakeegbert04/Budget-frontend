@@ -4,6 +4,8 @@
 @use "./navigation/private-header.scss";
 @use "./navigation/public-header.scss";
 
+@use "./custom-components/dropdown.scss";
+
 @use "./modals/modal.scss";
 @use "./modals/accounts-modal.scss";
 

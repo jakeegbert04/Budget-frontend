@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import CategoriesModal from "../modals/CategoriesModal";
 import Table from "../table/table";
-import usePageFetch from "../../hooks/usePageFetch";
+
+import { useInfo } from "../../context/InfoContext";
 
 const columns = [
   {
@@ -17,7 +18,7 @@ const columns = [
 
 const Categories = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { loading, data } = usePageFetch("categories");
+  const { categories } = useInfo();
 
   const handleModalChange = (value = true) => {
     setIsModalOpen(value);
@@ -32,7 +33,7 @@ const Categories = () => {
             Add Category
           </button>
         </div>
-        <Table data={data?.results} columns={columns} />
+        <Table data={categories} columns={columns} />
       </div>
       <CategoriesModal
         isModalOpen={isModalOpen}

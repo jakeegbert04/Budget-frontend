@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import Dropdown from "../custom-components/DropDown";
 import Modal from "./Modal";
 import useModalForm from "../../hooks/useModalForm";
+
+import { useInfo } from "../../context/InfoContext";
 
 const initialState = {
   account_id: "",
@@ -15,14 +18,41 @@ const initialState = {
   frequency: "",
 };
 
-const TransactionsModal = ({ isModalOpen, setIsModalOpen }) => {
+const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
+  const { accounts, categories } = useInfo();
+
   const { formData, setFormData, handleChange, handleSubmit, loading, error } =
     useModalForm({
       initialState,
       endpoint: "transaction/add",
-      onSuccess: () => setIsModalOpen(false),
+      onSuccess: (newTransaction) => {
+        setIsModalOpen(false);
+        setData((prev) => ({
+          ...prev,
+          results: prev?.results
+            ? [newTransaction.results, ...prev.results]
+            : [newTransaction.results],
+        }));
+      },
       validate: (data) => data.date && data.amount !== "",
     });
+
+  const accountOptions = accounts?.map((acc) => ({
+    value: acc.account_id,
+    label: acc.name,
+  }));
+
+  const categoriesOptions = categories?.map((cat) => ({
+    value: cat.category_id,
+    label: cat.name,
+  }));
+
+  const handleformChange = (option, type = "account_id") => {
+    setFormData((prev) => ({
+      ...prev,
+      [type]: option ? option.value : "",
+    }));
+  };
 
   useEffect(() => {
     if (!isModalOpen) setFormData(initialState);
@@ -45,6 +75,20 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen }) => {
         />
         <h1>Add Transaction</h1>
         <div className="inputs-wrapper">
+          <Dropdown
+            isSearchable
+            placeHolder="Select account"
+            options={accountOptions}
+            onChange={(value) => handleformChange(value)}
+          />
+
+          <Dropdown
+            isSearchable
+            placeHolder="Select Category"
+            options={categoriesOptions}
+            onChange={(value) => handleformChange(value, "category_id")}
+          />
+
           <input
             type="number"
             name="amount"

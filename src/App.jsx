@@ -1,9 +1,12 @@
-import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import { publicRoutes } from "./components/routing/publicRoutes";
 import { privateRoutes } from "./components/routing/privateRoutes";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import PublicRoute from "./components/routing/PublicRoute";
+
+import InfoProvider from "./context/InfoContext";
 import "../styles/main.scss";
 
 function App() {
@@ -21,7 +24,13 @@ function App() {
             ))}
           </Route>
 
-          <Route element={<PrivateRoute />}>
+          <Route
+            element={
+              <InfoProvider>
+                <PrivateRoute />
+              </InfoProvider>
+            }
+          >
             {privateRoutes.map((route) => (
               <Route
                 key={route.path}
@@ -31,7 +40,6 @@ function App() {
             ))}
           </Route>
 
-          {/* Fallback */}
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </Suspense>

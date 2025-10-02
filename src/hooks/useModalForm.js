@@ -26,7 +26,6 @@ const useModalForm = ({
   };
 
   const handleSubmit = async (e) => {
-    console.log("I clicked");
     e.preventDefault();
     setError(null);
     if (validate && !validate(formData)) {
@@ -34,16 +33,15 @@ const useModalForm = ({
       return;
     }
     try {
-      await fetchData(endpoint, {
+      const response = await fetchData(endpoint, {
         method: "POST",
         body: { ...formData, ...extraBody, user_id: userInfo.user_id },
       });
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(response);
     } catch (err) {
       setError("Failed to submit. Please try again.");
     }
   };
-
   useEffect(() => {
     setFormData(initialState);
     setError(null);

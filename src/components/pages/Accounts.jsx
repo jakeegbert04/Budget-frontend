@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import AccountsModal from "../modals/AccountsModal";
 import Table from "../table/table";
-import usePageFetch from "../../hooks/usePageFetch";
+
+import { useInfo } from "../../context/InfoContext";
 
 const columns = [
   {
@@ -21,7 +22,7 @@ const columns = [
 
 const Accounts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { loading, data } = usePageFetch("accounts");
+  const { accounts } = useInfo();
 
   const handleModalChange = (value = true) => {
     setIsModalOpen(value);
@@ -36,7 +37,7 @@ const Accounts = () => {
             Add Account
           </button>
         </div>
-        <Table data={data?.results} columns={columns} />
+        <Table data={accounts} columns={columns} />
       </div>
       <AccountsModal
         isModalOpen={isModalOpen}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import TransactionsModal from "../modals/TransactionsModal";
 import Table from "../table/table";
@@ -24,12 +24,13 @@ const columns = [
   {
     key: "amount",
     label: "Amount",
+    class: "",
   },
 ];
 
 const Transactions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { loading, data } = usePageFetch("transactions");
+  const { data, setData } = usePageFetch("transactions");
 
   const handleModalChange = (value = true) => {
     setIsModalOpen(value);
@@ -40,8 +41,8 @@ const Transactions = () => {
       <div className="table-container">
         <div className="title-wrapper">
           <h1>Transactions</h1>
-          <button className="blue-btn" onClick={handleModalChange}>
-            Add{" "}
+          <button className="blue-btn" onClick={() => handleModalChange()}>
+            Add
           </button>
         </div>
         <Table data={data?.results} columns={columns} />
@@ -49,6 +50,7 @@ const Transactions = () => {
       <TransactionsModal
         isModalOpen={isModalOpen}
         setIsModalOpen={handleModalChange}
+        setData={setData}
       />
     </div>
   );
