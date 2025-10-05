@@ -18,7 +18,7 @@ const columns = [
 
 const Categories = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { categories } = useInfo();
+  const { categories, setCategories } = useInfo();
 
   const handleModalChange = (value = true) => {
     setIsModalOpen(value);
@@ -38,6 +38,7 @@ const Categories = () => {
       <CategoriesModal
         isModalOpen={isModalOpen}
         setIsModalOpen={handleModalChange}
+        setData={setCategories}
       />
     </div>
   );

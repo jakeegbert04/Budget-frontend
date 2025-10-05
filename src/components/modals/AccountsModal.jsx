@@ -7,12 +7,15 @@ import Modal from "./Modal";
 
 const initialState = { name: "", account_type: "", balance: 0 };
 
-const AccountsModal = ({ isModalOpen, setIsModalOpen }) => {
+const AccountsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
   const { formData, setFormData, handleChange, handleSubmit, loading, error } =
     useModalForm({
       initialState,
       endpoint: "account/add",
-      onSuccess: () => setIsModalOpen(false),
+      onSuccess: (newAccount) => {
+        setIsModalOpen(false);
+        setData((prev) => [...prev, newAccount.results]);
+      },
       validate: (data) => data.name && data.account_type && data.balance !== "",
     });
 

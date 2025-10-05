@@ -22,7 +22,7 @@ const columns = [
 
 const Accounts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { accounts } = useInfo();
+  const { accounts, setAccounts } = useInfo();
 
   const handleModalChange = (value = true) => {
     setIsModalOpen(value);
@@ -42,6 +42,7 @@ const Accounts = () => {
       <AccountsModal
         isModalOpen={isModalOpen}
         setIsModalOpen={handleModalChange}
+        setData={setAccounts}
       />
     </div>
   );

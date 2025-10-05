@@ -12,12 +12,15 @@ const initialState = {
   end_date: "",
 };
 
-const CategoriesModal = ({ isModalOpen, setIsModalOpen }) => {
+const CategoriesModal = ({ isModalOpen, setIsModalOpen, setData }) => {
   const { formData, setFormData, handleChange, handleSubmit, loading, error } =
     useModalForm({
       initialState,
       endpoint: "category/add",
-      onSuccess: () => setIsModalOpen(false),
+      onSuccess: (newCategory) => {
+        setIsModalOpen(false);
+        setData((prev) => [...prev, newCategory.results]);
+      },
       validate: (data) => data.name && data.amount !== "",
     });
 

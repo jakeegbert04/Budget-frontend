@@ -21,6 +21,8 @@ export default function InfoProvider({ children }) {
   const infoState = {
     accounts,
     categories,
+    setCategories,
+    setAccounts,
   };
 
   return (

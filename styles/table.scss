@@ -63,6 +63,14 @@
         text-align: left;
       }
 
+      .amount-negative {
+        color: red;
+      }
+
+      .amount-positive {
+        color: green;
+      }
+
       &:hover {
         background-color: #f9f9f9;
       }

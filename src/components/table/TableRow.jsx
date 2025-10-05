@@ -9,7 +9,7 @@ const TableRow = ({ data, columns }) => {
         const value = getValue(data, column.key);
         let cellClass = "";
 
-        if (column.key === "amount") {
+        if (column.key === "amount" || column.key === "balance") {
           if (typeof value === "number") {
             cellClass = value < 0 ? "amount-negative" : "amount-positive";
           } else if (!isNaN(Number(value))) {
