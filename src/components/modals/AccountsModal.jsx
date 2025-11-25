@@ -11,7 +11,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
   const { formData, setFormData, handleChange, handleSubmit, loading, error } =
     useModalForm({
       initialState,
-      endpoint: "account/add",
+      endpoint: "account",
       onSuccess: (newAccount) => {
         setIsModalOpen(false);
         setData((prev) => [...prev, newAccount.results]);

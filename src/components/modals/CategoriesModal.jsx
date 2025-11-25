@@ -16,7 +16,7 @@ const CategoriesModal = ({ isModalOpen, setIsModalOpen, setData }) => {
   const { formData, setFormData, handleChange, handleSubmit, loading, error } =
     useModalForm({
       initialState,
-      endpoint: "category/add",
+      endpoint: "category",
       onSuccess: (newCategory) => {
         setIsModalOpen(false);
         setData((prev) => [...prev, newCategory.results]);

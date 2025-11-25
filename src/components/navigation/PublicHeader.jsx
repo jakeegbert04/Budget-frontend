@@ -1,7 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
 
+import Logo from "../../assets/images/logo.png";
+
 const PublicHeader = () => {
   const { pathname } = useLocation();
+
   return (
     <div className="navbar-container">
       <div className="public-container">
@@ -10,7 +13,9 @@ const PublicHeader = () => {
         ) : (
           <NavLink to="/login">Login</NavLink>
         )}
-        <a href="">Logo</a>
+        <NavLink>
+          <img src={Logo} alt="logo" />
+        </NavLink>
       </div>
     </div>
   );

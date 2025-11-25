@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 
+import Logo from "../../assets/images/logo.png";
+
 const PrivateHeader = () => {
   const { logout } = useContext(AuthContext);
 
@@ -13,7 +15,9 @@ const PrivateHeader = () => {
         <NavLink to="/accounts">Accounts</NavLink>
         <NavLink to="/transactions">Transactions</NavLink>
       </div>
-      <NavLink to="/home">Logo</NavLink>
+      <NavLink to="/home">
+        <img src={Logo} alt="logo" />
+      </NavLink>
       <button className="blue-btn" onClick={logout}>
         Logout
       </button>

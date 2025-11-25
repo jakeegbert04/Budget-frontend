@@ -24,7 +24,7 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
   const { formData, setFormData, handleChange, handleSubmit, loading, error } =
     useModalForm({
       initialState,
-      endpoint: "transaction/add",
+      endpoint: "transaction",
       onSuccess: (newTransaction) => {
         setIsModalOpen(false);
         setData((prev) => ({
@@ -105,26 +105,38 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
             onChange={handleChange}
           />
 
-          <input
-            type="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-          />
+          <div className="input-wrapper">
+            <label htmlFor="date">date</label>
+            <input
+              id="date"
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="date"
-            name="start_date"
-            value={formData.start_date}
-            onChange={handleChange}
-          />
+          <div className="input-wrapper">
+            <label htmlFor="start-date">Start Date</label>
+            <input
+              id="start-date"
+              type="date"
+              name="start_date"
+              value={formData.start_date}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="date"
-            name="end_date"
-            value={formData.end_date}
-            onChange={handleChange}
-          />
+          <div className="input-wrapper">
+            <label htmlFor="end-date">End Date</label>
+            <input
+              id="end-date"
+              type="date"
+              name="end_date"
+              value={formData.end_date}
+              onChange={handleChange}
+            />
+          </div>
 
           <input
             type="checkbox"
