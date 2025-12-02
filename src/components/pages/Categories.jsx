@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import CategoriesModal from "../modals/CategoriesModal";
-import Table from "../table/table";
+import Table from "../table/Table";
 
 import { useInfo } from "../../context/InfoContext";
 

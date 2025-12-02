@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import TransactionsModal from "../modals/TransactionsModal";
-import Table from "../table/table";
+import Table from "../table/Table";
 import usePageFetch from "../../hooks/usePageFetch";
 
 const columns = [
