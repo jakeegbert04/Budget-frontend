@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Dropdown from "../custom-components/DropDown";
+import Dropdown from "../custom-components/Dropdown";
 import Modal from "./Modal";
 import useModalForm from "../../hooks/useModalForm";
 
