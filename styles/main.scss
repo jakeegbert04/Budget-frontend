@@ -1,3 +1,4 @@
+@use "./common/mixins.scss";
 @use "./common/variables.scss";
 @use "./common/common.scss";
 
@@ -8,6 +9,7 @@
 
 @use "./modals/modal.scss";
 @use "./modals/accounts-modal.scss";
+@use "./modals/transaction-modal.scss";
 
 @use "./table.scss";
 @use "./pages/login.scss";

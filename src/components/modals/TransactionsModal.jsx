@@ -13,8 +13,8 @@ const initialState = {
   description: "",
   amount: 0,
   date: "",
-  start_date: "",
-  end_date: "",
+  start_date: null,
+  end_date: null,
   frequency: "",
 };
 
@@ -62,22 +62,23 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
     <Modal
       isModalOpen={isModalOpen}
       onRequestClose={() => setIsModalOpen(false)}
-      contentClass="create-account-modal"
-      overlayClass="account-overlay"
+      contentClass="transaction-modal"
+      overlayClass="transaction-overlay"
     >
       <form
-        className="create-container account-modal-container"
+        className="create-container transaction-modal-container"
         onSubmit={handleSubmit}
       >
         <FontAwesomeIcon
           onClick={() => setIsModalOpen(false)}
+          className="close-modal"
           icon="fa-xmark"
         />
         <h1>Add Transaction</h1>
         <div className="inputs-wrapper">
           <Dropdown
             isSearchable
-            placeHolder="Select account"
+            placeHolder="Select Account"
             options={accountOptions}
             onChange={(value) => handleformChange(value)}
           />
@@ -89,24 +90,21 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
             onChange={(value) => handleformChange(value, "category_id")}
           />
 
-          <input
-            type="number"
-            name="amount"
-            placeholder="Amount"
-            value={formData.amount}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            type="text"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
+          <div className="input-wrapper">
+            <label>Transaction Amount</label>
+            <input
+              id="transaction-amount"
+              type="number"
+              name="amount"
+              placeholder="Amount"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
           <div className="input-wrapper">
-            <label htmlFor="date">date</label>
+            <label htmlFor="date">Transaction Date</label>
             <input
               id="date"
               type="date"
@@ -115,6 +113,15 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
               onChange={handleChange}
             />
           </div>
+
+          <input
+            className="full-width"
+            type="text"
+            name="description"
+            placeholder="Description (optional)"
+            value={formData.description}
+            onChange={handleChange}
+          />
 
           <div className="input-wrapper">
             <label htmlFor="start-date">Start Date</label>
@@ -138,19 +145,27 @@ const TransactionsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
             />
           </div>
 
-          <input
-            type="checkbox"
-            name="frequency"
-            value={formData.frequency}
-            onChange={handleChange}
-          />
+          <div className="checkbox-wrapper">
+            <input
+              type="checkbox"
+              id="frequency"
+              name="frequency"
+              checked={formData.frequency}
+              onChange={handleChange}
+            />
+            <label htmlFor="frequency">Recurring</label>
+          </div>
 
-          <input
-            type="checkbox"
-            name="indefinitely"
-            value={formData.indefinitely}
-            onChange={handleChange}
-          />
+          <div className="checkbox-wrapper">
+            <input
+              type="checkbox"
+              id="indefinitely"
+              name="indefinitely"
+              checked={formData.indefinitely}
+              onChange={handleChange}
+            />
+            <label htmlFor="indefinitely">Indefinitely</label>
+          </div>
         </div>
 
         {error && <div className="error-message">{error}</div>}

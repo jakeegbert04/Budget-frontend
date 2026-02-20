@@ -38,6 +38,7 @@ const AccountsModal = ({ isModalOpen, setIsModalOpen, setData }) => {
       >
         <FontAwesomeIcon
           onClick={() => setIsModalOpen(false)}
+          className="close-modal"
           icon="fa-xmark"
         />
         <h1>Add Account</h1>

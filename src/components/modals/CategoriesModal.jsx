@@ -41,6 +41,7 @@ const CategoriesModal = ({ isModalOpen, setIsModalOpen, setData }) => {
       >
         <FontAwesomeIcon
           onClick={() => setIsModalOpen(false)}
+          className="close-modal"
           icon="fa-xmark"
         />
         <h1>Add Category</h1>
