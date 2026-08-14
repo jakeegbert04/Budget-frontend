@@ -6,16 +6,22 @@ const InfoContext = createContext();
 export default function InfoProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  // const [accountPagination, setAccountPagination] = useState(null);
 
-  const { data: accountData } = usePageFetch("accounts");
+  const { data: accountData } = usePageFetch(
+    `accounts?page=${page}&per_page=${limit}`
+  );
   const { data } = usePageFetch("categories");
 
   useEffect(() => {
-    setAccounts(accountData?.results);
+    setAccounts(accountData?.results || []);
+    // setAccountPagination(accountData?.pagination || null);
   }, [accountData]);
 
   useEffect(() => {
-    setCategories(data?.results);
+    setCategories(data?.results || []);
   }, [data]);
 
   const infoState = {
@@ -23,6 +29,11 @@ export default function InfoProvider({ children }) {
     categories,
     setCategories,
     setAccounts,
+    page,
+    setPage,
+    limit,
+    setLimit,
+    // accountPagination,
   };
 
   return (
