@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import AccountsModal from "../modals/AccountsModal";
 import Table from "../table/Table";
+
 import { useInfo } from "../../context/InfoContext";
 import useTableControls from "../../hooks/useTableControls";
 
@@ -13,6 +16,8 @@ const columns = [
 const Accounts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { accounts, setAccounts, setPage } = useInfo();
+
+  const navigate = useNavigate();
 
   const {
     searchTerm,
@@ -50,6 +55,7 @@ const Accounts = () => {
           onSort={handleSort}
           sortConfig={sortConfig}
           onPageChange={(nextPage) => setPage(Math.max(1, nextPage))}
+          onRowClick={(account) => navigate(`/accounts/${account.account_id}`)}
         />
       </div>
 

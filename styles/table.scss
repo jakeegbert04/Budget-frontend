@@ -126,6 +126,95 @@
   }
 }
 
+.date-filter {
+  position: relative;
+
+  .icon-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    transition: 0.15s ease-in;
+
+    &:hover {
+      border-color: #008ecf;
+      color: #008ecf;
+    }
+
+    &--active {
+      border-color: #008ecf;
+      color: #008ecf;
+      background: rgba(0, 142, 207, 0.08);
+    }
+
+    &__dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #008ecf;
+      border: 1.5px solid white;
+    }
+  }
+
+  .date-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 200px;
+    padding: 14px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    &__field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+      color: #555;
+
+      input {
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        background: white;
+      }
+    }
+
+    &__clear {
+      align-self: flex-start;
+      padding: 4px 0;
+      background: none;
+      border: none;
+      color: #008ecf;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        color: #006a9c;
+      }
+    }
+  }
+}
+
 .table-shell {
   width: 100%;
 }

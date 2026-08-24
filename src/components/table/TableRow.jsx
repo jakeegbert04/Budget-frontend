@@ -1,10 +1,15 @@
-const TableRow = ({ data, columns }) => {
+const TableRow = ({ data, columns, onRowClick }) => {
   const getValue = (obj, path) => {
     return path.split(".").reduce((acc, part) => acc && acc[part], obj);
   };
 
+  const isClickable = typeof onRowClick === "function";
+
   return (
-    <tr>
+    <tr
+      className={isClickable ? "table-row--clickable" : ""}
+      onClick={isClickable ? () => onRowClick(data) : undefined}
+    >
       {columns.map((column) => {
         const value = getValue(data, column.key);
         let cellClass = "";
